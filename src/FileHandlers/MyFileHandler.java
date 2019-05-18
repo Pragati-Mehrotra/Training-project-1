@@ -4,9 +4,9 @@ import model.Employee;
 
 public interface MyFileHandler {
 
-     Employee read() throws Exception;
+     Employee read();
 
-     void write(Employee employee) throws Exception;
+     Employee write();
 
 }
 
