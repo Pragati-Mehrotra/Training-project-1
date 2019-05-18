@@ -1,10 +1,61 @@
 package FileHandlers.FileHandlerImpl;
+import FileHandlers.MyFileHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import model.Employee;
+import java.io.*;
+public class JsonFileHandler  implements MyFileHandler {
+    private String readFileName, writeFileName;
+    private static int count;
+    public JsonFileHandler(String readPath, String writePath){
+        this.readFileName = readPath;
+        this.writeFileName = writePath;
+        count = 0;
+    }
+    @Override
+    public Employee read() {
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            // Deserialize JSON file into Java object.
+            Employee newEmployee = mapper.readValue(readFileName, Employee.class);
+            return newEmployee;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+    @Override
+    public void write(Employee employee){
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            File file = new File(writeFileName);
+            try {
+                // Serialize Java object info JSON file.
+                mapper.writeValue(file, employee);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+/*
+package FileHandlers.FileHandlerImpl;
 
 import FileHandlers.MyFileHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.nashorn.internal.parser.JSONParser;
 import model.Employee;
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.io.*;
 
@@ -13,30 +64,30 @@ public class JsonFileHandler  implements MyFileHandler {
     private String readFileName, writeFileName;
     private static int count;
 
-    public JsonFileHandler(String readPath, String writePath){
+    JsonFileHandler(String readPath, String writePath){
         this.readFileName = readPath;
         this.writeFileName = writePath;
         count = 0;
     }
 
     @Override
-    public Employee read() {
+    public Employee read(){
 
         //JSONParser jsonParser = new JSONParser();
 
 
-        try {
+        try{
 
-            ObjectMapper mapper = new ObjectMapper();
+                ObjectMapper mapper = new ObjectMapper();
 
             // Deserialize JSON file into Java object.
-            Employee newEmployee = mapper.readValue(writeFileName, Employee.class);
-            return newEmployee;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-            /*FileReader fileReader = new FileReader(this.readFileName);
+                Employee newEmployee = mapper.readValue(writeFileName, Employee.class);
+                return newEmployee;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            */
+/*FileReader fileReader = new FileReader(this.readFileName);
             JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
 
 
@@ -46,8 +97,15 @@ public class JsonFileHandler  implements MyFileHandler {
             Employee employeeData = new Employee();
             //employeeData
 //            Employee employeeData = (Employee) jsonArray;
-            return employeeData;*/
+            return employeeData;*//*
 
+
+
+
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+            return null;
+        }
 
     }
 
@@ -69,7 +127,8 @@ public class JsonFileHandler  implements MyFileHandler {
                 e.printStackTrace();
             }
 
-            /*JSONObject employeeObject = new JSONObject();
+            */
+/*JSONObject employeeObject = new JSONObject();
 
             employeeObject.put("employee", employee);
 
@@ -85,7 +144,8 @@ public class JsonFileHandler  implements MyFileHandler {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-*/
+*//*
+
         }
         catch (Exception e){
             e.printStackTrace();
@@ -93,4 +153,10 @@ public class JsonFileHandler  implements MyFileHandler {
 
     }
 
+    public static void main(String[] args) {
+
+
+
+    }
 }
+*/
