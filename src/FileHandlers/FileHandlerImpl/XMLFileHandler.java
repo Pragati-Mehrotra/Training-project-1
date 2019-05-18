@@ -31,9 +31,17 @@ public class XMLFileHandler implements MyFileHandler {
 
     private String outputPath;
 
-    private Document doc;
+    private Document docRead;
+
+    private Document docWrite;
 
     private int readCounter ;
+
+    private Element rootElement;
+
+    private StreamResult console;
+
+    private StreamResult file;
 
     XMLFileHandler(String path1,String path2) {
         this.inputPath = path1;
@@ -44,11 +52,31 @@ public class XMLFileHandler implements MyFileHandler {
             File inputFile = new File(inputPath);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            doc = dBuilder.parse(inputFile);
-            doc.getDocumentElement().normalize();
+            docRead = dBuilder.parse(inputFile);
+            docRead.getDocumentElement().normalize();
         }
         catch (SAXException | ParserConfigurationException | IOException e1) {
             e1.printStackTrace();
+        }
+
+        try{
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder;
+            dBuilder = dbFactory.newDocumentBuilder();
+            docWrite = dBuilder.newDocument();
+            //add elements to Document
+            rootElement =
+                    docWrite.createElementNS("https://www.journaldev.com/employee", "Employees");
+            //append root element to document
+            docWrite.appendChild(rootElement);
+
+            console = new StreamResult(System.out);
+            file = new StreamResult(new File(outputPath));
+
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
     @Override
@@ -56,11 +84,11 @@ public class XMLFileHandler implements MyFileHandler {
 
         Employee emp =null;
 
-            NodeList nList = doc.getElementsByTagName("employee");
+            NodeList nList = docRead.getElementsByTagName("employee");
             emp = getEmployeeRead(nList.item(readCounter));
             readCounter++;
             return emp;
-            
+
         }
 
     private static Employee getEmployeeRead(Node node) {
@@ -97,44 +125,27 @@ public class XMLFileHandler implements MyFileHandler {
 
     @Override
     public void write(Employee emp) {
-
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder;
         try {
-            dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.newDocument();
-            //add elements to Document
-            Element rootElement =
-                    doc.createElementNS("https://www.journaldev.com/employee", "Employees");
-            //append root element to document
-            doc.appendChild(rootElement);
-
             //append first child element to root element
-            rootElement.appendChild(getWriteEmployee(doc, emp.getFirstName(), emp.getLastName(), emp.getDateOfBirth().toString(), emp.getExperience().toString()));
+            rootElement.appendChild(getWriteEmployee(docWrite, emp.getFirstName(), emp.getLastName(), emp.getDateOfBirth().toString(), emp.getExperience().toString()));
 
             //for output to file, console
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             //for pretty print
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            DOMSource source = new DOMSource(doc);
-
-            //write to console or file
-            StreamResult console = new StreamResult(System.out);
-            StreamResult file = new StreamResult(new File(outputPath));
+            DOMSource source = new DOMSource(docWrite);
 
             //write data
             transformer.transform(source, console);
             transformer.transform(source, file);
             System.out.println("DONE");
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
-    }
+        }
 
     private static Node getWriteEmployee(Document doc,  String firstname, String lastname, String dateofbirth,
                                          String experience) {
