@@ -3,9 +3,12 @@ package FileHandlers.FileHandlerImpl;
 import FileHandlers.MyFileHandler;
 import model.Employee;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Date;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -57,8 +60,8 @@ public class XMLFileHandler implements MyFileHandler {
         }
         catch (SAXException | ParserConfigurationException | IOException e1) {
             e1.printStackTrace();
-        }
 
+        }
         try{
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder;
@@ -75,7 +78,6 @@ public class XMLFileHandler implements MyFileHandler {
 
 
             transformerFactory = TransformerFactory.newInstance();
-
         }
 
         catch (Exception e) {

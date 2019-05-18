@@ -13,7 +13,7 @@ public class CSVFileHandler implements MyFileHandler {
     FileWriter fileWriter = null;
 
 
-    public CSVFileHandler(String ReadPath,String WritePath) throws FileNotFoundException,IOException {
+    public CSVFileHandler(String ReadPath,String WritePath) throws IOException {
         csvFileForRead=ReadPath;
         csvFileForWrite=WritePath;
         bufferedReader = new BufferedReader(new FileReader(csvFileForRead));
@@ -33,6 +33,8 @@ public class CSVFileHandler implements MyFileHandler {
             //System.out.println(line);
             String d=line;
             String[] g=d.split(cvsSplitBy);
+                if (g.length != 3)
+                    throw new IllegalAccessException();
             employee.setFirstName(g[0]);
             employee.setLastName(g[1]);
             employee.setDateOfBirth(new SimpleDateFormat("dd/MM/yyyy").parse(g[2]));
