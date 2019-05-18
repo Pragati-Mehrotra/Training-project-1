@@ -32,18 +32,14 @@ public class JsonFileHandler  implements MyFileHandler {
 
     }
     @Override
-    public Employee read() {
+    public Employee read() throws Exception {
+      Employee employee=new Employee();
+        Object obj = new JSONParser().parse(new FileReader("JSONExample.json"));
 
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            // Deserialize JSON file into Java object.
-            Employee newEmployee = mapper.readValue(readFileName, Employee.class);
-            return newEmployee;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+        // typecasting obj to JSONObject
+        JSONObject jo = (JSONObject) obj;
 
+  return  employee;
     }
 
     @Override
