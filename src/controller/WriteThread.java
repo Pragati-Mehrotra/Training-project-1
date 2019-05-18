@@ -4,13 +4,12 @@ import FileHandlers.MyFileHandler;
 import model.Employee;
 import model.MyCollection;
 
-public class WriteThread {
-    private String filepath;
-    private  String ftype;
+public class WriteThread extends Thread{
+
     MyFileHandler myFileHandler;
 
 
-    MyCollection  myCollection= new MyCollection.getInstance();
+    MyCollection myCollection = MyCollection.getInstance();
 
     WriteThread(MyFileHandler myFileHandler) {
 
@@ -19,11 +18,11 @@ public class WriteThread {
     }
 
 
-    run() {
+   public void run() {
 
 
 
-         for(int i=0;i<100;i++)
+        for(int i=0;i<100;i++)
         {
             Employee employee = myCollection.get();
             try {
@@ -31,7 +30,7 @@ public class WriteThread {
             }
             catch (Exception e)
             {
-             System.out.println(e.toString());
+                System.out.println(e.toString());
             }
         }
 

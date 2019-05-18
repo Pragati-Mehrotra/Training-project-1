@@ -8,6 +8,7 @@ public class TestMyCollection {
     public static void main(String[] args) throws InterruptedException {
         TestMyCollection testMyCollection = new TestMyCollection();
         testMyCollection.testInsertToMyCollection();
+        Thread.sleep(2000);
         testMyCollection.testGetFromMyCollection();
     }
 
@@ -21,17 +22,6 @@ public class TestMyCollection {
         thread1.start();
         thread2.start();
         thread3.start();
-
-        try {
-            thread1.join();
-            thread2.join();
-            thread3.join();
-            System.out.println("Insertion threads have finished.");
-
-        } catch (InterruptedException e) {
-            System.out.println("Main thread Interrupted");
-        }
-
     }
 
     public void testGetFromMyCollection() {
@@ -45,16 +35,6 @@ public class TestMyCollection {
         thread1.start();
         thread2.start();
         thread3.start();
-
-        try {
-            thread1.join();
-            thread2.join();
-            thread3.join();
-            System.out.println("Get Employee threads have finished.");
-
-        } catch (InterruptedException e) {
-            System.out.println("Main thread Interrupted");
-        }
     }
 
     private class Insert100RecordsRunnable implements  Runnable{
