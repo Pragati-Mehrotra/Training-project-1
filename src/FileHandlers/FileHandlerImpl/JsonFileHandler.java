@@ -1,102 +1,162 @@
 package FileHandlers.FileHandlerImpl;
-
-import java.io.FileReader;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
-
 import FileHandlers.MyFileHandler;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Employee;
-
 import java.io.*;
-
-public class JsonFileHandler implements MyFileHandler {
-
-    private String readFileName;
-
-    private String writeFileName;
-    private static int readCount;
-    private JSONArray jsonArray;
-
-    private PrintWriter pw;
-
-    private Object obj;
-
-    public JsonFileHandler(String readPath, String writePath) {
+public class JsonFileHandler  implements MyFileHandler {
+    private String readFileName, writeFileName;
+    private static int count;
+    public JsonFileHandler(String readPath, String writePath){
         this.readFileName = readPath;
         this.writeFileName = writePath;
-        readCount = 0;
-
-        try {
-            obj = new JSONParser().parse(new FileReader(readFileName));
-            jsonArray = (JSONArray) obj;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try{
-            pw = new PrintWriter(writePath);
-        }
-        catch(Exception  e){
-            e.printStackTrace();
-        }
+        count = 0;
     }
-
     @Override
     public Employee read() {
 
-        Employee employeenew = new Employee();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            // Deserialize JSON file into Java object.
+            Employee newEmployee = mapper.readValue(readFileName, Employee.class);
+            return newEmployee;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
 
-       if(readCount< 99){
-           jsonArray.getJSONObject(readCount);
-       }
-
-       return employeenew;
     }
+    @Override
+    public void write(Employee employee){
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            File file = new File(writeFileName);
+            try {
+                // Serialize Java object info JSON file.
+                mapper.writeValue(file, employee);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+}
 
 
-    private static Employee parseEmployeeObject(JSONObject employee)
-    {
-        Employee emp = new Employee();
-        JSONObject employeeObject = (JSONObject) employee.get("employee");
 
-        //Get employee first name
-        String firstName = (String) employeeObject.get("firstName");
-        emp.setFirstName(firstName);
+/*
+package FileHandlers.FileHandlerImpl;
 
-        //Get employee last name
-        String lastName = (String) employeeObject.get("lastName");
-        emp.setLastName(lastName);
+import FileHandlers.MyFileHandler;
 
-        //Get employee website name
-        Date dateOfBirth = (Date) employeeObject.get("dateOfBirth");
-        emp.setDateOfBirth(dateOfBirth);
-        Double experience = (Double) employeeObject.get("experience");
-        emp.setExperience(experience);
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.nashorn.internal.parser.JSONParser;
+import model.Employee;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-        return emp;
+import java.io.*;
 
+public class JsonFileHandler  implements MyFileHandler {
+
+    private String readFileName, writeFileName;
+    private static int count;
+
+    JsonFileHandler(String readPath, String writePath){
+        this.readFileName = readPath;
+        this.writeFileName = writePath;
+        count = 0;
     }
 
     @Override
-    public void write(Employee employee) {
+    public Employee read(){
 
-        JSONObject jo = new JSONObject();
-        jo.put("firstName", employee.getFirstName());
-        jo.put("lastName", employee.getLastName());
-        jo.put("dateOfBirth", employee.getDateOfBirth());
-        jo.put("experience", employee.getExperience());
+        //JSONParser jsonParser = new JSONParser();
 
-        pw.write(jo.toJSONString());
 
-        pw.flush();
-        pw.close();
+        try{
+
+                ObjectMapper mapper = new ObjectMapper();
+
+            // Deserialize JSON file into Java object.
+                Employee newEmployee = mapper.readValue(writeFileName, Employee.class);
+                return newEmployee;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            */
+/*FileReader fileReader = new FileReader(this.readFileName);
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
+
+
+            JSONObject jsonObject = jsonArray.getJSONObject(count);
+            count++;
+
+            Employee employeeData = new Employee();
+            //employeeData
+//            Employee employeeData = (Employee) jsonArray;
+            return employeeData;*//*
+
+
+
+
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+            return null;
+        }
 
     }
 
+
+    @Override
+    public void write(Employee employee){
+
+        try{
+
+
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            File file = new File(writeFileName);
+            try {
+                // Serialize Java object info JSON file.
+                mapper.writeValue(file, employee);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            */
+/*JSONObject employeeObject = new JSONObject();
+
+            employeeObject.put("employee", employee);
+
+            //Add employees to list
+            JSONArray employeeList = new JSONArray();
+            employeeList.add(employeeObject);
+
+            //Write JSON file
+            try (FileWriter file = new FileWriter(this.writeFileName)) {
+                file.write(employeeList.toJSONString());
+                file.flush();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+*//*
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void main(String[] args) {
+
+
+
+    }
 }
+*/
