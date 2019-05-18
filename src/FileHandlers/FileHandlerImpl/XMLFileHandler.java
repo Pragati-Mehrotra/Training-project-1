@@ -39,8 +39,6 @@ public class XMLFileHandler implements MyFileHandler {
 
     private Element rootElement;
 
-    private StreamResult console;
-
     private StreamResult file;
 
 
@@ -74,7 +72,6 @@ public class XMLFileHandler implements MyFileHandler {
             //append root element to document
             docWrite.appendChild(rootElement);
 
-            console = new StreamResult(System.out);
             file = new StreamResult(new File(outputPath));
             transformerFactory = TransformerFactory.newInstance();
 
@@ -108,7 +105,7 @@ public class XMLFileHandler implements MyFileHandler {
             emp.setLastName((getTagValue("lastName", element)));
             DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             String s =getTagValue("dateOfBirth", element);
-            System.out.println(s);
+            //System.out.println(s);
             Date dob;
             try {
                 dob = df.parse(s);
@@ -144,9 +141,9 @@ public class XMLFileHandler implements MyFileHandler {
             DOMSource source = new DOMSource(docWrite);
 
             //write data
-            transformer.transform(source, console);
+            //transformer.transform(source, console);
             transformer.transform(source, file);
-            System.out.println("DONE");
+            //System.out.println("Done with X");
 
         }
         catch (Exception e) {

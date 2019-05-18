@@ -30,7 +30,7 @@ public class CSVFileHandler implements MyFileHandler {
             line = br.readLine();
             if(line==null)
                 return null;
-            System.out.println(line);
+            //System.out.println(line);
             String d=line;
             String[] g=d.split(cvsSplitBy);
             employee.setFirstName(g[0]);
@@ -53,7 +53,7 @@ public class CSVFileHandler implements MyFileHandler {
         String NEW_LINE_SEPARATOR = "\n";
         if(employee==null)
             return ;
-        System.out.println(employee);
+        //System.out.println(employee);
         try {
             fileWriter.append(employee.getFirstName());
             fileWriter.append(COMMA_DELIMITER);
@@ -64,7 +64,7 @@ public class CSVFileHandler implements MyFileHandler {
             fileWriter.append(String.valueOf(employee.getExperience()));
             fileWriter.append(NEW_LINE_SEPARATOR);
 
-            System.out.println("CSV file was created successfully !!!");
+            //System.out.println("CSV file was created successfully !!!");
 
         } catch (Exception e) {
             System.out.println("Error in CsvFileWriter !!!");

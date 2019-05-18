@@ -77,4 +77,8 @@ public class MyCollection
 
     }
 
+    public Integer geReadCounter(){
+        return readCounter;
+    }
+
 }
