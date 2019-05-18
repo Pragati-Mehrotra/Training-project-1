@@ -13,7 +13,13 @@ import java.io.*;
 public class JsonFileHandler  implements MyFileHandler {
 
     private String readFileName, writeFileName;
-    private static int count=0;
+    private static int count;
+    
+    JsonFileHandler(String readPath, String writePath){
+        this.readFileName = readPath;
+        this.writeFileName = writePath;
+        count = 0;
+    }
 
     @Override
     public Employee read(){
