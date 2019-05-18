@@ -29,7 +29,9 @@ public class MyController {
             }
 
             MyCollection myCollection = MyCollection.getInstance();
-            System.out.println(myCollection.getReadCounter());
+
+            System.out.println("Write counter:" + myCollection.getWriteCounter());
+            System.out.println("List size:" + myCollection.getSize());
 
 
             WriteThread xmlWrite = new WriteThread(xmlHandler);
@@ -48,7 +50,7 @@ public class MyController {
                 System.out.println(e.toString());
             }
 
-            System.out.println(myCollection.getWriteCounter());
+            System.out.println("Read Counter:" + myCollection.getReadCounter());
         }
         catch (Exception e){
             System.out.println(e.toString());

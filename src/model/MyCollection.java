@@ -89,4 +89,8 @@ public class MyCollection
         return readCounter;
     }
 
+    public Integer getSize(){
+        return employeeList.size();
+    }
+
 }
