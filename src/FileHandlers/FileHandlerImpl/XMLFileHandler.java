@@ -43,7 +43,8 @@ public class XMLFileHandler implements MyFileHandler {
 
     private StreamResult file;
 
-    private  TransformerFactory transformerFactory;
+
+    private TransformerFactory transformerFactory;
 
    public XMLFileHandler(String path1,String path2) {
         this.inputPath = path1;
@@ -74,6 +75,8 @@ public class XMLFileHandler implements MyFileHandler {
 
             console = new StreamResult(System.out);
             file = new StreamResult(new File(outputPath));
+
+
             transformerFactory = TransformerFactory.newInstance();
 
         }
@@ -130,10 +133,9 @@ public class XMLFileHandler implements MyFileHandler {
     public void write(Employee emp) {
         try {
             //append first child element to root element
-            rootElement.appendChild(getWriteEmployee(docWrite,emp.getFirstName(), emp.getLastName(), emp.getDateOfBirth().toString(), emp.getExperience().toString()));
+            rootElement.appendChild(getWriteEmployee(docWrite, emp.getFirstName(), emp.getLastName(), emp.getDateOfBirth().toString(), emp.getExperience().toString()));
 
             //for output to file, console
-
             Transformer transformer = transformerFactory.newTransformer();
             //for pretty print
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
