@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
+
+import FileHandlers.MyFileHandler;
 import model.Employee;
 
 import org.json.simple.JSONArray;
@@ -15,7 +17,7 @@ import java.io.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
-public class JsonFileHandler {
+public class JsonFileHandler implements MyFileHandler {
     private Object obj;
     private JSONParser parser;
 
@@ -81,6 +83,7 @@ public class JsonFileHandler {
         System.out.println(jo);
         System.out.println("done");
         pw.write(jo.toJSONString());
+        pw.println();
         pw.flush();
 
     }
