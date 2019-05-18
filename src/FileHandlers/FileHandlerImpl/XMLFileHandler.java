@@ -43,7 +43,7 @@ public class XMLFileHandler implements MyFileHandler {
 
     private StreamResult file;
 
-    XMLFileHandler(String path1,String path2) {
+   public XMLFileHandler(String path1,String path2) {
         this.inputPath = path1;
         this.outputPath = path2;
         readCounter = 0;
