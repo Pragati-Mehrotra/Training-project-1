@@ -43,6 +43,9 @@ public class XMLFileHandler implements MyFileHandler {
 
     private StreamResult file;
 
+
+    private TransformerFactory transformerFactory;
+
    public XMLFileHandler(String path1,String path2) {
         this.inputPath = path1;
         this.outputPath = path2;
@@ -72,6 +75,9 @@ public class XMLFileHandler implements MyFileHandler {
 
             console = new StreamResult(System.out);
             file = new StreamResult(new File(outputPath));
+
+
+            transformerFactory = TransformerFactory.newInstance();
 
         }
 
@@ -130,7 +136,6 @@ public class XMLFileHandler implements MyFileHandler {
             rootElement.appendChild(getWriteEmployee(docWrite, emp.getFirstName(), emp.getLastName(), emp.getDateOfBirth().toString(), emp.getExperience().toString()));
 
             //for output to file, console
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             //for pretty print
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");

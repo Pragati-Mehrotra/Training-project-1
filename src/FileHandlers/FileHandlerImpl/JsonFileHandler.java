@@ -3,10 +3,8 @@ package FileHandlers.FileHandlerImpl;
 import FileHandlers.MyFileHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.nashorn.internal.parser.JSONParser;
 import model.Employee;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+
 
 import java.io.*;
 
@@ -15,28 +13,29 @@ public class JsonFileHandler  implements MyFileHandler {
     private String readFileName, writeFileName;
     private static int count;
 
-    JsonFileHandler(String readPath, String writePath){
+    public JsonFileHandler(String readPath, String writePath){
         this.readFileName = readPath;
         this.writeFileName = writePath;
         count = 0;
     }
 
     @Override
-    public Employee read(){
+    public Employee read() {
 
         //JSONParser jsonParser = new JSONParser();
 
 
-        try{
+        try {
 
-                ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = new ObjectMapper();
 
             // Deserialize JSON file into Java object.
-                Employee newEmployee = mapper.readValue(writeFileName, Employee.class);
-                return newEmployee;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Employee newEmployee = mapper.readValue(writeFileName, Employee.class);
+            return newEmployee;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
             /*FileReader fileReader = new FileReader(this.readFileName);
             JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
 
@@ -49,12 +48,6 @@ public class JsonFileHandler  implements MyFileHandler {
 //            Employee employeeData = (Employee) jsonArray;
             return employeeData;*/
 
-
-
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-            return null;
-        }
 
     }
 
@@ -100,9 +93,4 @@ public class JsonFileHandler  implements MyFileHandler {
 
     }
 
-    public static void main(String[] args) {
-
-
-
-    }
 }
