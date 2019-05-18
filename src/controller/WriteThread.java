@@ -7,32 +7,21 @@ import model.MyCollection;
 public class WriteThread extends Thread{
 
     MyFileHandler myFileHandler;
-
-
     MyCollection myCollection = MyCollection.getInstance();
 
-    WriteThread(MyFileHandler myFileHandler) {
-
+    public WriteThread(MyFileHandler myFileHandler) {
         this.myFileHandler=myFileHandler;
-
     }
 
-
    public void run() {
-
-
-
-        for(int i=0;i<100;i++)
-        {
+        for(int writecounter = 0; writecounter <100; writecounter++) {
             Employee employee = myCollection.get();
             try {
                 myFileHandler.write(employee);
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 System.out.println(e.toString());
             }
         }
-
     }
 }

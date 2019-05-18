@@ -9,14 +9,14 @@ import java.text.SimpleDateFormat;
 public class CSVFileHandler implements MyFileHandler {
     String csvFileForRead;
     String csvFileForWrite;
-    BufferedReader br = null;
+    BufferedReader bufferedReader = null;
     FileWriter fileWriter = null;
 
 
     public CSVFileHandler(String ReadPath,String WritePath) throws FileNotFoundException,IOException {
         csvFileForRead=ReadPath;
         csvFileForWrite=WritePath;
-        br = new BufferedReader(new FileReader(csvFileForRead));
+        bufferedReader = new BufferedReader(new FileReader(csvFileForRead));
         fileWriter = new FileWriter(csvFileForWrite);
 
     }
@@ -27,7 +27,7 @@ public class CSVFileHandler implements MyFileHandler {
         String line = "";
         String cvsSplitBy = ",";
         try {
-            line = br.readLine();
+            line = bufferedReader.readLine();
             if(line==null)
                 return null;
             //System.out.println(line);
@@ -53,8 +53,7 @@ public class CSVFileHandler implements MyFileHandler {
         String NEW_LINE_SEPARATOR = "\n";
         if(employee==null)
             return ;
-        //System.out.println(employee);
-        try {
+
             fileWriter.append(employee.getFirstName());
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(employee.getLastName());
@@ -64,12 +63,6 @@ public class CSVFileHandler implements MyFileHandler {
             fileWriter.append(String.valueOf(employee.getExperience()));
             fileWriter.append(NEW_LINE_SEPARATOR);
 
-            //System.out.println("CSV file was created successfully !!!");
-
-        } catch (Exception e) {
-            System.out.println("Error in CsvFileWriter !!!");
-            e.printStackTrace();
-        }
         fileWriter.flush();
     }
 }
