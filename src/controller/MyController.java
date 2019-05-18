@@ -5,7 +5,6 @@ import FileHandlers.FileHandlerImpl.JsonFileHandler;
 import FileHandlers.FileHandlerImpl.XMLFileHandler;
 import FileHandlers.MyFileHandler;
 import model.MyCollection;
-import sun.jvm.hotspot.debugger.ThreadAccess;
 
 public class MyController {
 
@@ -21,14 +20,36 @@ public class MyController {
         xmlRead.start();
         jsonRead.start();
         csvRead.start();
-        xmlRead.join();
-        jsonRead.join();
-        csvRead.join();
+        try {
+            xmlRead.join();
+            jsonRead.join();
+            csvRead.join();
+        }
+        catch(InterruptedException e){
+            System.out.println(e.toString());
+        }
 
         MyCollection myCollection = MyCollection.getInstance();
         System.out.println(myCollection.getWriteCounter());
 
-        
+
+        WriteThread xmlWrite = new WriteThread(xmlHandler);
+        WriteThread  jsonWrite = new WriteThread(jsonHandler);
+        WriteThread csvWrite = new WriteThread(csvHandler);
+
+        xmlWrite.start();
+        jsonWrite.start();
+        csvWrite.start();
+
+        try{
+            xmlWrite.join();
+            jsonWrite.join();
+            csvWrite.join();
+        }
+        catch(InterruptedException e)
+        {
+            System.out.println(e.toString());
+        }
 
     }
 }
