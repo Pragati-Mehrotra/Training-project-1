@@ -74,12 +74,7 @@ public class MyCollection
 
     public Integer getWriteCounter() {
         return writeCounter;
-<<<<<<< Updated upstream
 
     }
 
-    
-=======
-    }
->>>>>>> Stashed changes
 }

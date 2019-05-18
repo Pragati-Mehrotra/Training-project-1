@@ -1,5 +1,5 @@
 package FileHandlers.FileHandlerImpl;
-
+/*
 import FileHandlers.MyFileHandler;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -20,12 +20,6 @@ public class JsonFileHandler  implements MyFileHandler {
 
 
         try{
-/*            JSONParser jsonParser = new JSONParser();
-            FileReader fileReader = new FileReader(this.readFileName);
-            Object object = jsonParser.parse(fileReader);
-
-            Employee employeeData = (Employee) object;
-            return employeeData;*/
 
             ObjectMapper objectMapper = new ObjectMapper();
             Employee employee = objectMapper.readValue(new File(this.readFileName), Employee.class);
@@ -81,4 +75,4 @@ public class JsonFileHandler  implements MyFileHandler {
 
     }
 }
-
+*/
