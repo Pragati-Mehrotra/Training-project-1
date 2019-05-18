@@ -1,52 +1,58 @@
 package FileHandlers.FileHandlerImpl;
 
 import FileHandlers.MyFileHandler;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jdk.nashorn.internal.parser.JSONParser;
 import model.Employee;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.*;
 
 import java.io.*;
 
 public class JsonFileHandler  implements MyFileHandler {
 
     private String readFileName, writeFileName;
+    private static int count;
+    
+    JsonFileHandler(String readPath, String writePath){
+        this.readFileName = readPath;
+        this.writeFileName = writePath;
+        count = 0;
+    }
 
     @Override
     public Employee read(){
 
+        JSONParser jsonParser = new JSONParser();
+
 
         try{
-/*            JSONParser jsonParser = new JSONParser();
+
             FileReader fileReader = new FileReader(this.readFileName);
-            Object object = jsonParser.parse(fileReader);
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
 
-            Employee employeeData = (Employee) object;
-            return employeeData;*/
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            Employee employee = objectMapper.readValue(new File(this.readFileName), Employee.class);
-            return employee;
+            JSONObject jsonObject = jsonArray.getJSONObject(count);
+            count++;
+
+            Employee employeeData = new Employee();
+            //employeeData
+//            Employee employeeData = (Employee) jsonArray;
+            return employeeData;
+
+
 
         }catch (FileNotFoundException e){
             e.printStackTrace();
             return null;
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
     }
 
 
     @Override
-    public void write(Employee employee) throws Exception{
+    public void write(Employee employee){
 
         try{
 
@@ -81,4 +87,3 @@ public class JsonFileHandler  implements MyFileHandler {
 
     }
 }
-
