@@ -6,7 +6,7 @@ public interface MyFileHandler {
 
      Employee read();
 
-     Employee write();
+     Employee write(Employee employee);
 
 }
 
