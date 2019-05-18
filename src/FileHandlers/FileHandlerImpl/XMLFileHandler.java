@@ -31,41 +31,36 @@ public class XMLFileHandler implements MyFileHandler {
 
     private String outputPath;
 
-
+    private Document doc;
 
     private int readCounter ;
 
-    public XMLFileHandler(String path1,String path2){
+    XMLFileHandler(String path1,String path2) {
         this.inputPath = path1;
-        this.outputPath =path2;
-        readCounter =0;
-        }
-
-    @Override
-    public Employee read() {
-
-        Employee emp =null;
+        this.outputPath = path2;
+        readCounter = 0;
 
         try {
             File inputFile = new File(inputPath);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputFile);
+            doc = dBuilder.parse(inputFile);
             doc.getDocumentElement().normalize();
+        }
+        catch (SAXException | ParserConfigurationException | IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+    @Override
+    public Employee read() {
+
+        Employee emp =null;
 
             NodeList nList = doc.getElementsByTagName("employee");
             emp = getEmployeeRead(nList.item(readCounter));
             readCounter++;
             return emp;
-
-        }
-
-        catch (SAXException | ParserConfigurationException | IOException e1) {
-            e1.printStackTrace();
-        }
-
-        return emp;
-
+            
         }
 
     private static Employee getEmployeeRead(Node node) {
