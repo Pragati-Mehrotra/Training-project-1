@@ -51,9 +51,12 @@ public class MyCollection
         /**
          * @Param: employee Employee object to be inserted
          */
+        if(employee != null){
+            employeeList.add(employee);
+            writeCounter++;
+        }
 
-        employeeList.add(employee);
-        writeCounter++;
+
 
     }
 
@@ -63,7 +66,12 @@ public class MyCollection
          * @return: object Employee in employeeList at index readCounter;
          */
 
-        Employee employee =  employeeList.get(readCounter);
+        Employee employee = null;
+        try {
+            employee = employeeList.get(readCounter);
+        }catch (IndexOutOfBoundsException e){
+            return null;
+        }
         readCounter++;
         return employee;
     }
